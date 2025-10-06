@@ -8,6 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+//import NumberStringConverter
+import javafx.util.converter.NumberStringConverter;
+
+
 public class ColorChooserController {
     // instance variables for interacting with GUI components
     @FXML private Slider redSlider;
@@ -28,14 +32,13 @@ public class ColorChooserController {
 
     public void initialize() {
         // bind TextField values to corresponding Slider values
-        redTextField.textProperty().bind(
-                redSlider.valueProperty().asString("%.0f"));
-        greenTextField.textProperty().bind(
-                greenSlider.valueProperty().asString("%.0f"));
-        blueTextField.textProperty().bind(
-                blueSlider.valueProperty().asString("%.0f"));
-        alphaTextField.textProperty().bind(
-                alphaSlider.valueProperty().asString("%.2f"));
+        redTextField.textProperty().bindBidirectional(redSlider.valueProperty(), new NumberStringConverter());
+
+        greenTextField.textProperty().bindBidirectional(greenSlider.valueProperty(), new NumberStringConverter());
+
+        blueTextField.textProperty().bindBidirectional(blueSlider.valueProperty(), new NumberStringConverter());
+
+        alphaTextField.textProperty().bindBidirectional(alphaSlider.valueProperty(), new NumberStringConverter());
 
         // listeners that set Rectangle's fill based on Slider changes
         redSlider.valueProperty().addListener(
@@ -78,5 +81,6 @@ public class ColorChooserController {
                     }
                 }
         );
+
     }
 }
